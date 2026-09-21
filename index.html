@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rockstar Name Generator!</title>
+    <style>
+        :root {
+            --primary: #ff0055;
+            --bg: #1a1a1a;
+            --text: #ffffff;
+            --panel: #2a2a2a;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: var(--panel);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background-color: #333;
+            color: white;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #cc0044;
+        }
+        
+        /* Reveal Screen Styles */
+        #reveal-section {
+            display: none; /* Hidden by default */
+        }
+        .reveal-container {
+            border: 2px solid #00ff00;
+            background-color: #001100;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .reveal-header {
+            color: #00ff00;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 20px;
+        }
+        .anon-img {
+            width: 120px;
+            display: block;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            border: 3px solid #00ff00;
+        }
+        .data-list {
+            list-style-type: none;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00ff00;
+            font-size: 14px;
+        }
+        .data-list li {
+            margin-bottom: 8px;
+            border-bottom: 1px dashed #004400;
+            padding-bottom: 5px;
+            word-wrap: break-word;
+        }
+        .data-label {
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .warning {
+            color: #ff3333;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .reset-btn {
+            background: none;
+            border: none;
+            color: #888;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 14px;
+            width: auto;
+            padding: 0;
+        }
+        .reset-btn:hover {
+            color: #fff;
+            background: none;
+        }
+
+        /* Educational Debrief Styles */
+        .debrief-box {
+            background-color: #1a331a;
+            border-left: 4px solid #00ff00;
+            padding: 15px;
+            margin-top: 25px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ccffcc;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .debrief-title {
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- THE HOOK: Fake Rockstar Form -->
+        <div id="form-section">
+            <h1>🎸 Find Your Rockstar Name! 🎸</h1>
+            <p>Enter your details below to discover your true stage identity!</p>
+            
+            <form id="rockstarForm">
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" required autocomplete="off">
+                </div>
+                
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" required autocomplete="off">
+                </div>
+                
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" required>
+                </div>
+                
+                <button type="submit">Get My Rockstar Name!</button>
+            </form>
+        </div>
+
+        <!-- THE REVEAL: Security Checker -->
+        <div id="reveal-section">
+            <div class="reveal-container">
+                <h2 class="reveal-header">SYSTEM COMPROMISED</h2>
+                
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Anonymous_emblem.svg" alt="Anonymous" class="anon-img">
+                
+                <p style="color: white; text-align: center;">You expected a Rockstar name. Instead, you just gave away your data.</p>
+                
+                <ul class="data-list">
+                    <li><span class="data-label">VOLUNTEERED DATA:</span></li>
+                    <li>First Name: <span id="rev-first"></span></li>
+                    <li>Last Name: <span id="rev-last"></span></li>
+                    <li>Date of Birth: <span id="rev-dob"></span></li>
+                    <br>
+                    <li><span class="data-label">GLEANED DEVICE/NETWORK DATA:</span></li>
+                    <li>IP Address: <span id="rev-ip">Detecting...</span></li>
+                    <li>Estimated Location: <span id="rev-location">Checking...</span></li>
+                    <li>Internet Provider (ISP): <span id="rev-isp">Checking...</span></li>
+                    <li>Timezone: <span id="rev-tz"></span></li>
+                    <li>Local Time: <span id="rev-time"></span></li>
+                    <li>Screen Resolution: <span id="rev-screen"></span></li>
+                    <li>CPU Cores: <span id="rev-cores"></span></li>
+                    <li>Estimated RAM: <span id="rev-ram"></span></li>
+                    <li>Graphics Card (GPU): <span id="rev-gpu"></span></li>
+                    <li>Battery Level: <span id="rev-battery">Checking...</span></li>
+                    <li>Theme Preference: <span id="rev-theme"></span></li>
+                    <li>Touchscreen Enabled: <span id="rev-touch"></span></li>
+                    <li>System Language: <span id="rev-lang"></span></li>
+                    <li>Previous Page (Referrer): <span id="rev-referrer"></span></li>
+                    <li>Network Connection: <span id="rev-network"></span></li>
+                    <li>Browser Info (User Agent):<br><span id="rev-ua"></span></li>
+                </ul>
+                
+                <p class="warning">Always check who you are giving your information to.</p>
+
+                <!-- Educational Debrief -->
+                <div class="debrief-box">
+                    <span class="debrief-title">🚨 NO PERMISSIONS REQUIRED</span>
+                    Notice that your browser never popped up an alert asking, "Do you want to share your battery level, GPU model, or CPU cores?" This data is broadcasted automatically to every website you visit.
+                    <br><br>
+                    <span class="debrief-title">🕵️ THE CONCEPT OF FINGERPRINTING</span>
+                    While one piece of data (like a 1920x1080 screen) is shared by millions of users, combining your specific GPU model + CPU cores + timezone + screen dimensions + system language creates a "Digital Fingerprint." This fingerprint is unique enough to identify and track you across multiple websites, even if you clear your cookies or use Incognito Mode!
+                </div>
+
+            </div>
+            
+            <button class="reset-btn" onclick="location.reload()">Reset Demo</button>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('rockstarForm').addEventListener('submit', async function(e) {
+            // Prevent page refresh
+            e.preventDefault();
+
+            // 1. Gather the Volunteered Data
+            document.getElementById('rev-first').textContent = document.getElementById('first_name').value;
+            document.getElementById('rev-last').textContent = document.getElementById('last_name').value;
+            document.getElementById('rev-dob').textContent = document.getElementById('dob').value;
+
+            // 2. Gather Client-Side Metadata
+            document.getElementById('rev-ua').textContent = navigator.userAgent;
+            document.getElementById('rev-lang').textContent = navigator.language;
+            document.getElementById('rev-screen').textContent = `${window.screen.width}x${window.screen.height}`;
+            document.getElementById('rev-tz').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            document.getElementById('rev-time').textContent = new Date().toLocaleTimeString();
+            document.getElementById('rev-cores').textContent = (navigator.hardwareConcurrency || 'Unknown') + ' logical cores';
+            document.getElementById('rev-ram').textContent = navigator.deviceMemory ? (navigator.deviceMemory + ' GB (approx)') : 'Not reported';
+            
+            const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.getElementById('rev-theme').textContent = isDark ? 'Dark Mode' : 'Light Mode';
+            document.getElementById('rev-touch').textContent = (navigator.maxTouchPoints > 0) ? 'Yes (Touchscreen)' : 'No (Mouse/Keyboard)';
+
+            // Referrer Tracking
+            document.getElementById('rev-referrer').textContent = document.referrer ? document.referrer : 'Direct Visit (or hidden)';
+
+            // Connection Type Tracking
+            if (navigator.connection) {
+                const type = navigator.connection.effectiveType ? navigator.connection.effectiveType.toUpperCase() : '';
+                const speed = navigator.connection.downlink ? `(approx ${navigator.connection.downlink} Mbps)` : '';
+                document.getElementById('rev-network').textContent = `${type} ${speed}`.trim() || 'Unknown';
+            } else {
+                document.getElementById('rev-network').textContent = 'Hidden/Not Supported';
+            }
+
+            // Graphics Card (WebGL Fingerprinting)
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+                document.getElementById('rev-gpu').textContent = renderer || 'Standard Generic Driver';
+            } catch (err) {
+                document.getElementById('rev-gpu').textContent = 'Blocked/Unsupported';
+            }
+
+            // Battery Status
+            if ('getBattery' in navigator) {
+                navigator.getBattery().then(battery => {
+                    const status = `${Math.round(battery.level * 100)}% (${battery.charging ? 'Charging' : 'On Battery'})`;
+                    document.getElementById('rev-battery').textContent = status;
+                }).catch(() => {
+                    document.getElementById('rev-battery').textContent = 'Unavailable';
+                });
+            } else {
+                document.getElementById('rev-battery').textContent = 'Desktop / Not Supported';
+            }
+
+            // 3. Switch views immediately
+            document.getElementById('form-section').style.display = 'none';
+            document.getElementById('reveal-section').style.display = 'block';
+
+            // 4. Fetch IP, Location, and ISP asynchronously (with fallback handling)
+            try {
+                const geoResponse = await fetch('https://ipwho.is/');
+                if (!geoResponse.ok) throw new Error('API blocked');
+                
+                const geoData = await geoResponse.json();
+                
+                if (geoData.success) {
+                    document.getElementById('rev-ip').textContent = geoData.ip;
+                    document.getElementById('rev-location').textContent = `${geoData.city}, ${geoData.region}, ${geoData.country}`;
+                    document.getElementById('rev-isp').textContent = geoData.connection.isp;
+                } else {
+                    throw new Error('API failed to locate');
+                }
+                
+            } catch (error) {
+                // Fallback attempt if ipwho.is fails or is blocked by an ad-blocker
+                try {
+                    const responseFallback = await fetch('https://api.ipify.org?format=json');
+                    if (!responseFallback.ok) throw new Error('Fallback blocked');
+                    const fallbackData = await responseFallback.json();
+                    document.getElementById('rev-ip').textContent = fallbackData.ip + " (IP only)";
+                    document.getElementById('rev-location').textContent = 'Hidden by network/extensions';
+                    document.getElementById('rev-isp').textContent = 'Hidden by network/extensions';
+                } catch (fallbackError) {
+                    document.getElementById('rev-ip').textContent = 'Could not detect (Blocked)';
+                    document.getElementById('rev-location').textContent = 'Hidden by network/extensions';
+                    document.getElementById('rev-isp').textContent = 'Hidden by network/extensions';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
